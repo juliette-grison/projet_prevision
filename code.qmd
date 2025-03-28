@@ -6,19 +6,24 @@ editor: visual
 
 # Chargement des librairies
 ```{r}
+#juliette
 library(readr)
+
+
+#isaline
+library(tseries)      
+library(moments)
+library(fBasics)
 ```
 
 # Import des données
 ```{r}
 y <- read_csv("data.csv")
-yy <- ts(data = y, start=c(2000,01),frequency=12)
-
 ```
 
-# Coupage des données à 2020
+# Création de la ts
 ```{r}
-
+yy <- ts(data = y, start=c(2000,01),frequency=12)
 ```
 
 # 1) Analyse exploratoire 
@@ -37,10 +42,18 @@ yy <- ts(data = y, start=c(2000,01),frequency=12)
 
 ## c) Statistiques descriptives sur la série corrigée (moyenne, écart-type, skewness, kurtosis normalité, box-plot …). Commenter 
 
-```{r}
+### Statistiques descriptives
 
+```{r}
+stat = basicStats(y$APU000072610)
+show(stat)
 ```
 
+### Box-plot
+
+```{r}
+df <- tibble(value = as.numeric(ts))
+```
 
 ## d) Détection de la saisonnalité et schéma de décomposition (additif ou multiplicatif) 
 
