@@ -15,6 +15,7 @@ library(readr)
 library(tseries)      
 library(moments)
 library(fBasics)
+library(tibble)
 ```
 
 # Import des données
@@ -56,6 +57,11 @@ show(stat)
 
 ```{r}
 df <- tibble(value = as.numeric(ts))
+ggplot(
+  df, aes(y = value)) +
+  geom_boxplot(fill = "royalblue", alpha = 0.5) +
+  labs(title = "Boxplot de la série corrigée", y = "Valeur") +
+  theme_minimal()
 ```
 
 ## d) Détection de la saisonnalité et schéma de décomposition (additif ou multiplicatif)
