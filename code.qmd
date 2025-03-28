@@ -6,11 +6,13 @@ editor: visual
 
 # Chargement des librairies
 ```{r}
-
+library(readr)
 ```
 
 # Import des données
 ```{r}
+y <- read_csv("data.csv")
+yy <- ts(data = y, start=c(2000,01),frequency=12)
 
 ```
 
