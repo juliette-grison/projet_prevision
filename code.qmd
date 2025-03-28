@@ -19,3 +19,75 @@ editor: visual
 
 ```
 
+# 1) Analyse exploratoire 
+
+## a) Présentation et caractérisation de la série étudiée : source, définition, graphique 
+
+```{r}
+
+```
+
+## b) Détection des points atypiques. Présenter ces points sous forme de tableau (date, type de point (AO, TC …), t-stat) et trouver des explications économiques de l’apparition des 3 plus importants 
+
+```{r}
+
+```
+
+## c) Statistiques descriptives sur la série corrigée (moyenne, écart-type, skewness, kurtosis normalité, box-plot …). Commenter 
+
+```{r}
+
+```
+
+
+## d) Détection de la saisonnalité et schéma de décomposition (additif ou multiplicatif) 
+
+```{r}
+
+```
+
+# 2) Désaisonnalisation et décomposition 
+
+## Désaisonnaliser et décomposer la série corrigée à partir des méthodes X13-ARIMA SEATS. Commenter (effets déterministes, paramètres ARIMA …) 
+
+```{r}
+
+```
+
+
+# 3) Prévision de la série saisonnière corrigée des points atypiques sur une année  
+
+## a) Estimer et prévoir les modèles suivants : 
+
+### (i) les méthodes Naïve, X13-ARIMA-SEATS, STL et STS. Commenter les modèles STS (variance : level, slope, seas, epsilon)  
+
+```{r}
+
+```
+
+### (ii) les méthodes de lissage exponentiel : Holt-Winters, ETS, TBATS,  ADAM ETS, ADAM ETS SARIMA et SSARIMA. Commenter ces modèles. 
+
+```{r}
+
+```
+
+### (iii) un modèle SARIMA(p,d,q)(P,D,Q)12 . Commenter ce modèle. 
+
+```{r}
+
+```
+
+## b) Paramètres : présenter sous forme de tableau les paramètres des modèles précédents. Déterminer et commenter le meilleur modèle d’après les critères AIC et AICc 
+
+```{r}
+
+```
+
+4) Représenter graphiquement l’évolution des prévisions des différents modèles et 
+commenter. 
+5) Qualité de prévision : calculer les MSE et R2OOS de tous les modèles précédents (3a) et 
+définir le meilleur modèle. Comparer les à celles d’une prévision naïve. Faire également 
+le graphique des CSPE.
+6) Test de précision : calculer le test de Diebold-Mariano pour chaque modèle par rapport à 
+la prévision naïve et définir le meilleur modèle (option « less ») 
+7) Prévision sur une année avec un pas de 1 mois avec le meilleur modèle de la question 6)
