@@ -83,11 +83,32 @@ editor: visual
 
 ```
 
-4) Représenter graphiquement l’évolution des prévisions des différents modèles et 
-commenter. 
-5) Qualité de prévision : calculer les MSE et R2OOS de tous les modèles précédents (3a) et 
-définir le meilleur modèle. Comparer les à celles d’une prévision naïve. Faire également 
-le graphique des CSPE.
-6) Test de précision : calculer le test de Diebold-Mariano pour chaque modèle par rapport à 
+
+# 4) Représenter graphiquement l’évolution des prévisions des différents modèles et commenter. 
+
+```{r}
+
+```
+
+
+# 5) Qualité de prévision : calculer les MSE et R2OOS de tous les modèles précédents (3a) et définir le meilleur modèle. Comparer les à celles d’une prévision naïve. Faire également le graphique des CSPE.
+
+```{r}
+
+```
+
+
+# 6) Test de précision : calculer le test de Diebold-Mariano pour chaque modèle par rapport à 
 la prévision naïve et définir le meilleur modèle (option « less ») 
-7) Prévision sur une année avec un pas de 1 mois avec le meilleur modèle de la question 6)
+
+```{r}
+
+```
+
+
+# 7) Prévision sur une année avec un pas de 1 mois avec le meilleur modèle de la question 6)
+
+```{r}
+
+```
+
