@@ -10,6 +10,8 @@ editor: visual
 #juliette
 library(readr)
 library(tsoutliers)
+library(forecast)
+library(rAmCharts)
 
 #isaline
 library(tseries)      
@@ -135,7 +137,16 @@ La série ne montre pas de potentielles valeurs atypiques.
 ## Désaisonnaliser et décomposer la série corrigée à partir des méthodes X13-ARIMA SEATS. Commenter (effets déterministes, paramètres ARIMA ...)
 
 ```{r}
+myspec <- x13_spec("RSA5c")
+mysax13 <- x13(adj, myspec)
+summary(mysax13$regarima)
+mysax13
+plot(mysax13$final)
 
+y_lin(mysats)
+
+
+data('dat_stock_2')
 ```
 
 # 3) Prévision de la série saisonnière corrigée des points atypiques sur une année
