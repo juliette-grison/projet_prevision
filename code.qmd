@@ -12,6 +12,7 @@ library(readr)
 library(tsoutliers)
 library(forecast)
 library(rAmCharts)
+library(smooth)
 
 #isaline
 library(tseries)      
@@ -199,15 +200,143 @@ Le modèle est très propre statistiquement : pas de résidu suspect, pas d’in
 
 ### (ii) les méthodes de lissage exponentiel : Holt-Winters, ETS, TBATS, ADAM ETS, ADAM ETS SARIMA et SSARIMA. Commenter ces modèles.
 
+#### Holt-Winters
 ```{r}
+# --- Seasonal HW ---
+# Holt-Winters additif :
+m <- HoltWinters(adj,seasonal="add")
+m
+
+# horizon h=50 - intervals 95%
+p = predict(m, 50, prediction.interval = TRUE) 
+plot(m, p)
+show(p)
+prevp = p[1]
+show(prevp)
+```
+Smoothing parameters:
+ alpha: 0.8872126
+ beta : 0.02022757
+ gamma: 1
+ 
+ 
+#### ETS
+```{r}
+# Estimate ETS methods with forecast package
+# ETS: Error, Trend, Seasonal
+fitets <- ets(adj)
+show(fitets)
+plot(fitets)
+
+# Forecasting: 12-ahead forecasts
+prevets <- forecast(fitets,12)
+show(prevets)
+plot(prevets)
 
 ```
+Smoothing parameters:
+    alpha = 0.4316 
+    beta  = 0.1454 
+    gamma = 0.3338 
+    phi   = 0.9759 
+
+      AIC      AICc       BIC 
+-1928.384 -1925.303 -1865.657 
+
+#### TBATS
+```{r}
+# Estimate seasonal decomposition with forecast package
+# TBATS model: Exponential smoothing state space model with Box-Cox transformation, 
+# ARMA errors, Trend and Seasonal components
+
+decomp <- tbats(adj)
+show(decomp)
+plot(decomp)
+
+# Forecasting: 12-ahead forecasts
+prevtbats <- forecast(decomp,12)
+show(prevtbats)
+plot(prevtbats)
+```
+
+Parameters
+  Alpha: 0.9851542
+  Beta: -0.01946547
+  Damping Parameter: 0.990434
+  Gamma-1 Values: -0.0003006371
+  Gamma-2 Values: 0.001320002
+  
+Sigma: 0.000911622
+AIC: -2018.301
+
+#### ADAM ETS
+```{r}
+fitadam1 <- auto.adam(adj, model="ZZZ", lags=c(1,12), select=TRUE)
+show(fitadam1)
+plot(fitadam1)
+
+# Forecasting: 12-ahead forecasts
+# ADAM ETS
+prevadam1 <- forecast(fitadam1,12)
+show(prevadam1)
+plot(prevadam1)
+```
+alpha 
+    1 
+    
+Information criteria:
+      AIC      AICc       BIC      BICc 
+-2745.733 -2745.564 -2731.794 -2731.329
+
+#### ADAM ETS SARIMA
+```{r}
+fitadam2 <- auto.adam(adj, model="ZZZ", lags=c(1,1,12), orders=list(ar=c(3,3), i=(2), ma=c(3,3), select=TRUE))
+show(fitadam2)
+plot(fitadam2)
+
+# ADAM ETS+ARIMA
+prevadam2 <- forecast(fitadam2, h=12, level = 0.90)
+prevadam2
+plot(prevadam2)
+```
+alpha 
+    1 
+    
+Information criteria:
+      AIC      AICc       BIC      BICc 
+-2745.733 -2745.564 -2731.794 -2731.329
+
+### SSARIMA
+```{r}
+# SSARIMA
+fitssarima <- auto.ssarima(adj, lags=c(1,12), orders=list(ar=c(3,3), i=(2), ma=c(3,3), select=TRUE))
+fitssarima
+summary(fitssarima)
+
+par(mfcol=c(2,2))
+plot(fitssarima)
+
+# Forecasting: 12-ahead forecasts
+prevssarima <- forecast(fitssarima, h=12, level = 0.90)
+prevssarima
+plot(prevssarima)
+
+par(mfcol=c(2,2))
+```
+Model estimated: SARIMA(3,1,3)[1](3,0,0)[12]
+
+Information criteria:
+      AIC      AICc       BIC      BICc 
+-2638.685 -2637.729 -2603.837 -2601.214 
 
 ### (iii) un modèle SARIMA(p,d,q)(P,D,Q)12 . Commenter ce modèle.
 
 ```{r}
+fit_sarima <- auto.arima(adj, seasonal = TRUE)
 
+summary(fit_sarima)
 ```
+
 
 ## b) Paramètres : présenter sous forme de tableau les paramètres des modèles précédents. Déterminer et commenter le meilleur modèle d'après les critères AIC et AICc
 
