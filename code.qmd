@@ -101,7 +101,7 @@ Il n'y a plus de points atypiques.
 ### Statistiques descriptives
 
 ```{r}
-stat = basicStats(y$APU000072610)
+stat = basicStats(adj)
 show(stat)
 ```
 
@@ -114,7 +114,7 @@ En ce qui concerne le Kurtosis, nous trouvons un chiffre largement inférieur à
 ### Box-plot
 
 ```{r}
-df <- tibble(value = as.numeric(yy))
+df <- tibble(value = as.numeric(adj))
 ggplot(
   df, aes(y = value)) +
   geom_boxplot(fill = "royalblue", alpha = 0.5) +
