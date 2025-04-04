@@ -17,6 +17,7 @@ library(moments)
 library(fBasics)
 library(tibble)
 library(ggplot2)
+library(RJDemetra)
 ```
 
 # Import des données
@@ -127,8 +128,13 @@ La série ne montre pas de potentielles valeurs atypiques.
 ## d) Détection de la saisonnalité et schéma de décomposition (additif ou multiplicatif)
 
 ```{r}
-
+myregx13 <- regarima_x13(adj, spec ="RG5c")
+summary(myregx13)
+s_transform(myregx13)
+plot(myregx13)
 ```
+
+Test log level (vers slide 20) => pas de transformation en log => schéma et décomposition additive
 
 # 2) Désaisonnalisation et décomposition
 
