@@ -194,9 +194,54 @@ Le modèle est très propre statistiquement : pas de résidu suspect, pas d’in
 
 ### (i) les méthodes Naïve, X13-ARIMA-SEATS, STL et STS. Commenter les modèles STS (variance : level, slope, seas, epsilon)
 
-```{r}
+#### X13-ARIMA-SEATS
 
+```{r}
+myregx13$forecast
+myregx13$model$effects
+myregx13$residuals
+myregx13$residuals.stat
 ```
+
+#### STL
+
+est-ce qu'il y a besoin de faire la décomp de stl?? prcq dans la question c'est seulement demandé de commenter les STS donc de décomp sts
+```{r}
+decomp <- stl(adj, s.window = "periodic")
+plot(decomp)
+```
+
+```{r}
+fitstl = stlm(adj)
+prevstl <- forecast(fitstl,12) # 12 dans le td
+show(prevstl)
+plot(prevstl)
+```
+
+#### STS
+
+```{r}
+fit <- StructTS(adj)
+plot(cbind(fitted(fit), residuals(fit)))
+show(fit)
+```
+
+```{r}
+fitsts = StructTS(adj)
+prevsts <- forecast(fitsts,12) # aussi 12 dans le td
+show(prevsts)
+plot(prevsts)
+```
+
+En observant les variances du modèle STS, nous trouvons que le modèle est globalement stable et prévisible.
+Pour commencer, la variance sur le niveau (level) est nulle, signifiant que le niveau est constant dans le temps.
+
+Ensuite, la variance de la pente (slope) est très faible, montrant une évolution lente de la tendance sur la période étudiée.
+
+Après cela, la saisonnalité (seas) est régulière, avec une variance également très faible.
+
+Enfin, il n'y a aucune variance sur les erreurs résiduelles, alors, nous pouvons déduire que le modèle explique très bien la série.
+
 
 ### (ii) les méthodes de lissage exponentiel : Holt-Winters, ETS, TBATS, ADAM ETS, ADAM ETS SARIMA et SSARIMA. Commenter ces modèles.
 
