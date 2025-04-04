@@ -9,7 +9,7 @@ editor: visual
 ```{r}
 #juliette
 library(readr)
-
+library(tsoutliers)
 
 #isaline
 library(tseries)      
@@ -41,8 +41,59 @@ plot.ts(yy, main = "Prix de l'électricité moyen (par kW/h) des villes aux Etat
 ## b) Détection des points atypiques. Présenter ces points sous forme de tableau (date, type de point (AO, TC ...), t-stat) et trouver des explications économiques de l'apparition des 3 plus importants
 
 ```{r}
-
+# Automoatic procedure for detection of outliers
+fit <- tso(yy)
+plot(fit)
+show(fit)
 ```
+
+2 points atypiques détectés :
+Outliers:
+  type ind    time   coefhat  tstat
+1   LS  73 2006:01  0.004563  5.229
+2   AO 172 2014:04 -0.004166 -6.790
+
+Explication économique :
+
+1. Level Shift (LS) en janvier 2006 (2006:01) – Coef : +0.004563
+Ce que ça signifie : À partir de janvier 2006, il y a eu une hausse durable du niveau des prix de l’électricité dans les villes américaines. Ce n’est pas juste une fluctuation, mais un changement de régime, une "cassure de tendance".
+
+Hypothèses économiques possibles :
+
+📈 Hausse du coût des combustibles fossiles utilisés dans la production d’électricité (charbon, gaz naturel).
+
+⚙️ Réformes dans le marché de l’électricité : par exemple, déréglementation dans certains États qui a conduit à des hausses de prix.
+
+🌱 Début de politiques énergétiques en faveur des énergies renouvelables, augmentant les coûts de transition pour les fournisseurs.
+
+🔌 Investissements dans les infrastructures électriques (grilles intelligentes, sécurité, maintenance…) répercutés sur les consommateurs.
+
+🔎 À noter : entre 2005 et 2006, les prix du gaz naturel ont fortement augmenté aux États-Unis (surtout après les ouragans Katrina et Rita en 2005), ce qui a probablement entraîné une hausse durable des prix de l’électricité.
+
+📌 2. Additive Outlier (AO) en octobre 2014 (2014:04) – Coef : -0.004166
+Ce que ça signifie : En octobre 2014, il y a eu une baisse ponctuelle du prix moyen de l’électricité. La série reprend son cours normal ensuite, donc ce n’est pas un changement structurel.
+
+Hypothèses économiques possibles :
+
+🛢️ Chute brutale des prix du pétrole en 2014, qui a aussi impacté les prix du gaz naturel (souvent utilisé pour produire de l’électricité). Cela a pu provoquer une baisse temporaire des prix de l’électricité.
+
+🌀 Conditions climatiques exceptionnelles qui auraient réduit la consommation ou permis une production plus efficace.
+
+🧾 Subventions temporaires ou politiques locales limitant les tarifs pendant une courte période.
+
+📉 Le prix du pétrole a commencé à chuter fortement à la mi-2014, ce qui a eu des répercussions sur de nombreuses formes d’énergie.
+
+
+
+```{r}
+# outlier adjusted series
+adj <- fit$yadj
+plot(adj)
+write(t(adj), file="adjusted-series.out", ncolumn = 1, append = FALSE)
+
+tso(adj)
+```
+Il n'y a plus de points atypiques. 
 
 ## c) Statistiques descriptives sur la série corrigée (moyenne, écart-type, skewness, kurtosis normalité, box-plot ...). Commenter
 
