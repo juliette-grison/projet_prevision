@@ -155,6 +155,38 @@ y_lin(mysats)
 data('dat_stock_2')
 ```
 
+Modèle ARIMA saisonnier avec :
+
+-  Différence non saisonnière (d=1) → il faut différencier la série une fois pour la rendre stationnaire (tendance présente).
+
+-  Différence saisonnière (D=1) → il faut aussi la différencier sur 12 mois pour corriger les effets saisonniers.
+
+-  MA saisonnier (Q=1) → il y a une composante bruit blanc à corriger chaque année (mensualité).
+
+BTheta(1)  -0.8452
+
+Cycle        27.3%
+Seasonal     69.6%
+Irregular     1.9%
+Très faible → modèle capte bien la dynamique de la série. Peu de variance inexpliquée.
+
+La saisonnalité explique près de 70% de la variance (hors tendance). Cela indique que les prix de l’électricité suivent une forte dynamique saisonnière — typiquement liée :
+-  À la climatisation l’été 
+-  Au chauffage l’hiver 
+
+Tous les tests de résidu saisonnier sont > 0.9, donc :
+-  Pas de saisonnalité résiduelle : le modèle a bien nettoyé les effets saisonniers.
+-  Pas de preuve de saisonnalité instable sur la période.
+
+Conclusion : 
+Les prix de l’électricité sont très saisonniers (≈70 % de la variance).
+
+Il y a une tendance sous-jacente modérée mais bien présente.
+
+Pas de bruit aléatoire important → bonne prévisibilité.
+
+Le modèle est très propre statistiquement : pas de résidu suspect, pas d’instabilité.
+
 # 3) Prévision de la série saisonnière corrigée des points atypiques sur une année
 
 ## a) Estimer et prévoir les modèles suivants :
