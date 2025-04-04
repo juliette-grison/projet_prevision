@@ -16,6 +16,7 @@ library(tseries)
 library(moments)
 library(fBasics)
 library(tibble)
+library(ggplot2)
 ```
 
 # Import des données
@@ -53,16 +54,24 @@ stat = basicStats(y$APU000072610)
 show(stat)
 ```
 
+Pour commencer, nous observons que la moyenne et la médiane sont relativement proches, ce qui montre une bonne distribution des valeurs. Néanmoins, la médiane est légèrement supérieure à la moyenne, ce qui laisse penser qu'il y a tout de même une certaine asymétrie.  De plus, l'écart type étant faible, cela indique que les valeurs sont faiblement dispersées autour de la moyenne et que les prix sont plutôt stable.
+
+Ensuite, la Skewness étant négative, de -0.5538, cela confirme la présence d'une légère asymétrie à gauche. Alors, la plupart des valeurs sont élevées, cependant quelques valeurs faibles tirent la moyenne vers le bas.
+
+En ce qui concerne le Kurtosis, nous trouvons un chiffre largement inférieur à 3 : la distribution est platycurtique. Ainsi, il y a peu de pics de valeurs extrêmes sur cette période.
+
 ### Box-plot
 
 ```{r}
-df <- tibble(value = as.numeric(ts))
+df <- tibble(value = as.numeric(yy))
 ggplot(
   df, aes(y = value)) +
   geom_boxplot(fill = "royalblue", alpha = 0.5) +
   labs(title = "Boxplot de la série corrigée", y = "Valeur") +
   theme_minimal()
 ```
+
+La série ne montre pas de potentielles valeurs atypiques.
 
 ## d) Détection de la saisonnalité et schéma de décomposition (additif ou multiplicatif)
 
